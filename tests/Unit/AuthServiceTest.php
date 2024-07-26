@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Services\AuthService;
 use App\Services\UserService;
 use Mockery;
 use PHPUnit\Framework\TestCase;
@@ -17,6 +18,7 @@ class AuthServiceTest extends TestCase
         parent::setUp();
 
         $this->userServiceMock = Mockery::mock(UserService::class);
+        $this->authService = new AuthService($this->userServiceMock);
     }
 
     public function testLoginFailureDueToUserNotFound()
