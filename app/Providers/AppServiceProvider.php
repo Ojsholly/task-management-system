@@ -4,11 +4,12 @@ namespace App\Providers;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
 
-        Response::macro('success', function ($data, $message = '', $status = Response::HTTP_OK) {
+        Response::macro('success', function ($data, $message = '', $status = ResponseAlias::HTTP_OK) {
             return response()->json([
                 'status' => 'success',
                 'message' => $message,
@@ -39,7 +40,7 @@ class AppServiceProvider extends ServiceProvider
             ], $status);
         });
 
-        Response::macro('error', function ($message, $status = Response::HTTP_BAD_REQUEST) {
+        Response::macro('error', function ($message, $status = ResponseAlias::HTTP_BAD_REQUEST) {
             return response()->json([
                 'status' => 'error',
                 'message' => $message,
