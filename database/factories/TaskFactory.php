@@ -17,7 +17,17 @@ class TaskFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => fake()->sentence(),
+            'description' => fake()->paragraph(),
         ];
+    }
+
+    public function completed(): TaskFactory|Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'completed_at' => now(),
+            ];
+        });
     }
 }
