@@ -18,7 +18,7 @@ class AuthController extends Controller
 
         return match ($response == null) {
             true => response()->error('Invalid credentials submitted.'),
-            false => response()->success(['token' => $response['token'], 'user' => new UserResource($response['user'])]),
+            false => response()->success(['token' => $response['token'], 'user' => new UserResource($response['user'])], 'Logged in successfully.'),
         };
     }
 

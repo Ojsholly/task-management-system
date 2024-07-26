@@ -20,7 +20,7 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
 
-            $table->index(['user_id', 'name', 'email']);
+            $table->index(['id', 'name', 'email']);
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
