@@ -37,7 +37,7 @@ class UserController extends Controller
         } catch (Throwable $exception) {
             report($exception);
 
-            return response()->error('An error occurred while creating your account. Please try again later.', $exception->getCode());
+            return response()->error('An error occurred while creating your account. Please try again later.', 500);
         }
     }
 
