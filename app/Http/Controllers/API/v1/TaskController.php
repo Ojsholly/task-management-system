@@ -58,6 +58,10 @@ class TaskController extends Controller
 
             throw_if(! $task, new ModelNotFoundException('Requested task not found.', ResponseAlias::HTTP_NOT_FOUND));
 
+            if (auth()->user()->cannot('view', $task)) {
+                return response()->error('You are not authorized to view this task', ResponseAlias::HTTP_FORBIDDEN);
+            }
+
             return response()->success(new TaskResource($task), 'Task retrieved successfully');
         } catch (ModelNotFoundException $exception) {
             return response()->error($exception->getMessage(), $exception->getCode());
@@ -78,6 +82,10 @@ class TaskController extends Controller
 
             throw_if(! $task, new ModelNotFoundException('Requested task not found.', ResponseAlias::HTTP_NOT_FOUND));
 
+            if (auth()->user()->cannot('update', $task)) {
+                return response()->error('You are not authorized to update this task', ResponseAlias::HTTP_FORBIDDEN);
+            }
+
             return response()->success(new TaskResource($task), 'Task updated successfully');
         } catch (ModelNotFoundException $exception) {
             return response()->error($exception->getMessage(), $exception->getCode());
@@ -94,7 +102,13 @@ class TaskController extends Controller
     public function destroy(string $id)
     {
         try {
-            $this->taskService->delete($id);
+            $task = $this->taskService->getTask($id);
+
+            if (auth()->user()->cannot('delete', $task)) {
+                return response()->error('You are not authorized to delete this task', ResponseAlias::HTTP_FORBIDDEN);
+            }
+
+            $this->taskService->delete($task->id);
 
             return response()->success([], 'Task deleted successfully');
         } catch (Throwable $exception) {
