@@ -16,4 +16,12 @@ class UserService implements UserServiceInterface
     {
         return User::where($field, $value)->first();
     }
+
+    public function updateUser(array $data, int $id): ?User
+    {
+        $user = $this->getUserByField('id', $id);
+        $user?->update($data);
+
+        return $user;
+    }
 }

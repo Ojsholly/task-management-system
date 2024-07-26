@@ -18,7 +18,7 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
-            'email_verified_at' => $this->email_verified_at->toDayDateTimeString(),
+            'email_verified_at' => $this->email_verified_at?->toDayDateTimeString(),
             'created_at' => $this->created_at->toDayDateTimeString(),
             'updated_at' => $this->updated_at->diffForHumans(),
         ];
